@@ -1,7 +1,5 @@
 <?php
 
-require_once("simple_html_dom.php");
-
 class Verify {
     // Class variables
     private $ourTeamURL;
