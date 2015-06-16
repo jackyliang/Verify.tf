@@ -1,73 +1,172 @@
 <?php
 
 class Verify {
-    // Class variables
+    // Two URLs - our and their teams
     private $ourTeamURL;
     private $theirTeamURL;
 
+    // Two HTML objects - our and their team's
     private $ourTeamHTML;
     private $theirTeamHTML;
 
+    // Two associative arrays - our and their team's
     private $ourTeamPlayers = array();
-    private $theirTeamPlayers;
+    private $theirTeamPlayers = array();
 
-    private $test;
+    // Two team names - our and their team's
+    private $ourTeamName;
+    private $theirTeamName;
 
     public function Verify($ourTeamURL, $theirTeamURL) {
 
+        // Silence the DOM errors
         libxml_use_internal_errors(true);
 
+        // Store the two URLs - ours and theirs
         $this->ourTeamURL = $ourTeamURL;
         $this->theirTeamURL = $theirTeamURL;
 
+
+        // Set HTTP response header to plain text for debugging output
+        header("Content-type: text/plain");
+
+        // Generate our team's HTML file
         $this->ourTeamHTML = new DomDocument;
         $this->ourTeamHTML->loadHTMLFile($this->ourTeamURL);
 
-//        $this->theirTeamHTML = new DomDocument;
-//        $this->theirTeamHTML->loadHTMLFile($this->theirTeamURL);
+        // Generate their team's HTML file
+        $this->theirTeamHTML = new DomDocument;
+        $this->theirTeamHTML->loadHTMLFile($this->theirTeamURL);
 
-        $xpath = new DomXPath($this->ourTeamHTML);
+        $this->ourTeamPlayers = $this->scrapeUGCTeam($this->ourTeamHTML);
+        $this->theirTeamPlayers = $this->scrapeUGCTeam($this->theirTeamHTML);
 
-        /* Set HTTP response header to plain text for debugging output */
-        header("Content-type: text/plain");
+        $this->ourTeamName = $this->scrapeUGCTeamName($this->ourTeamHTML);
+        $this->theirTeamName = $this->scrapeUGCTeamName($this->theirTeamHTML);
 
-        $steamName = $xpath->query('//*[@id="wrapper"]//div[@class="col-md-12"]//h5/b');
-
-        $steamNameList = array();
-        $steamIDList = array();
-
-        /* Traverse the DOMNodeList object to output each DomNode's nodeValue */
-        foreach ($steamName as $id => $node) {
-            $steamName = "";
-            $steamID = "";
-
-            if($id % 2 == 0 && $node->nodeValue !== '') {
-                $steamName = $node->nodeValue;
-            } else if ($id % 2 == 1 && $node->nodeValue !== '') {
-                $steamID = $node->nodeValue;
-            }
-
-            array_push($steamNameList, $steamName);
-
-            array_push($steamIDList, $steamID);
-        }
-
-        // var_dump($steamNameList);
-        // var_dump($steamIDList);
-
-        $this->ourTeamPlayers = array_combine(
-            $steamNameList,
-            $steamIDList
-        );
-
-        var_dump($this->ourTeamPlayers);
 
         // Scrape their team site
         // Store Name -> Steam ID
     }
 
-    public function getTest() {
-        return $this->test;
+    /**
+     * When supplied a valid UGC team URL, return the team name
+     * @param $url     UGC Team URL
+     * @return string  Team name
+     */
+    public function scrapeUGCTeamName($url){
+        $xpath = new DomXPath($url);
+
+        // XPath to get the team abbreviation and name
+        $teamAbbXPath = '//*[@id="wrapper"]/section/div/div[1]/div[1]/div/div/h1/text()';
+        $teamNameXPath = '//*[@id="wrapper"]/section/div/div[1]/div[1]/div/div/h1/b';
+
+        $teamAbbNode = $xpath->query($teamAbbXPath);
+        $teamNameNode = $xpath->query($teamNameXPath);
+
+        $teamAbb = '';
+        $teamName = '';
+
+        // Save the team's abbreviation
+        foreach($teamAbbNode as $node) {
+            $teamAbb = trim($node->nodeValue);
+            break;
+        }
+
+        // Save the team's name
+        foreach($teamNameNode as $node) {
+            $teamName = trim($node->nodeValue);
+            break;
+        }
+
+        return $teamAbb . ' - ' . $teamName;
+    }
+
+    /**
+     * When supplied a valid UGC team URL, return an associative array
+     * of the UGC team of Steam Name and Steam ID
+     * @param $url    UGC Team URL
+     * @return array  Associative array of Steam Name -> Steam ID
+     */
+    public function scrapeUGCTeam($url){
+
+        $xpath = new DomXPath($url);
+
+        // XPath to get the Steam names and Steam IDs
+        $steamNameAndIDXPath = '//*[@id="wrapper"]//div[@class="col-md-12"]//h5/b';
+
+        // Get the Steam names and Steam IDs using the XPath
+        $steamNameAndIDs = $xpath->query($steamNameAndIDXPath);
+
+        // Temporary lists to store the Steam Names and Steam IDs
+        $steamNameList = array();
+        $steamIDList = array();
+
+        foreach ($steamNameAndIDs as $id => $node) {
+            $steamName = "";
+            $steamID = "";
+
+            // Store Steam name first (which is the even-numbered item)
+            // in the scraped list. Then store the Steam ID (which is
+            // the odd-numbered item).
+            if($id % 2 == 0) {
+                $steamName = $node->nodeValue;
+            } else if ($id % 2 == 1) {
+                $steamID = $node->nodeValue;
+            }
+
+            // Add each Steam name onto our team's list
+            if(!empty($steamName)) {
+                array_push($steamNameList, $steamName);
+            } else if(!empty($steamID)){
+                // Add each Steam ID onto our team's list
+                array_push($steamIDList, $steamID);
+            }
+        }
+
+        // Combine Steam ID and Steam Name to our team's associative
+        // list
+        $team = array_combine(
+            $steamNameList,
+            $steamIDList
+        );
+
+        return $team;
+    }
+
+    /**
+     * Returns an associative array of our team
+     * where the key is the Steam name and the
+     * value is the Steam ID
+     * @return array Associative array of our team
+     */
+    public function getOurTeam(){
+        return $this->ourTeamPlayers;
+    }
+
+    /**
+     * Returns an associative array of their team
+     * where the key is the Steam name and the
+     * value is the Steam ID
+     * @return array
+     */
+    public function getTheirTeam(){
+        return $this->theirTeamPlayers;
+    }
+
+    public function getOurTeamName(){
+        return $this->ourTeamName;
+    }
+
+    public function getTheirTeamName(){
+        return $this->theirTeamName;
+    }
+
+
+
+
+    public function getMisMatches(){
+
     }
 
 }
