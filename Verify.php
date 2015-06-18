@@ -6,17 +6,31 @@
  */
 require_once("ParseStatus.php");
 require_once("ScrapeUGC.php");
+require_once("SteamID.php");
 
 class Verify {
+    // Steam profile URL
+    const STEAM_PROFILE = 'http://steamcommunity.com/profiles/';
+
+    // Each server contains three different types of players - players from
+    // our team, players from their team, and unrostered players. These private
+    // vars stores these players
     private $ourTeamRoster = array();
     private $theirTeamRoster = array();
     private $unrostered = array();
 
+    // Our team and their team names
     private $ourTeamName;
     private $theirTeamName;
 
+    // Our team and their team URLs
     private $ourTeamURL;
     private $theirTeamURL;
+
+    // Mapping name to Steam URL
+    private $ourTeamProfile;
+    private $theirTeamProfile;
+    private $unrosteredProfile;
 
     public function Verify(
         $ourTeamURL,
@@ -39,6 +53,8 @@ class Verify {
         $this->ourTeamURL = $scrape->getOurTeamURL();
         $this->theirTeamURL = $scrape->getTheirTeamURL();
 
+        echo SteamID::parse('[U:1:62145982]')->communityId();
+
         // Loop through the current server's player list and compare each Steam
         // ID from the status output to the teams. We're basically taking the
         // Steam IDs from the status output and comparing each value to
@@ -49,14 +65,18 @@ class Verify {
             if(in_array($steamID, $ourTeamPlayers)) {
                 // Add to our team's roster list
                 $this->ourTeamRoster[$name] = $steamID;
+                $this->ourTeamProfile[$name] = SteamID::parse($steamID)->profileURL();
             } else if (in_array($steamID, $theirTeamPlayers)) {
                 // Add to their team's roster list
                 $this->theirTeamRoster[$name] = $steamID;
+                $this->theirTeamProfile[$name] = SteamID::parse($steamID)->profileURL();
             } else {
                 // Add to unrostered
                 $this->unrostered[$name] = $steamID;
+                $this->unrosteredProfile[$name] = SteamID::parse($steamID)->profileURL();
             }
         }
+        print_r($this->ourTeamProfile);
     }
 
     /**
@@ -137,5 +157,29 @@ class Verify {
      */
     public function getUnrostered() {
         return $this->unrostered;
+    }
+
+    /**
+     * Get all of our team's profile URLs
+     * @return mixed
+     */
+    public function getOurTeamProfile() {
+        return $this->ourTeamProfile;
+    }
+
+    /**
+     * Get all of their team's profile URLs
+     * @return mixed
+     */
+    public function getTheirTeamProfile() {
+        return $this->theirTeamProfile;
+    }
+
+    /**
+     * Get all unrostered player's profile URLs
+     * @return mixed
+     */
+    public function getUnrosteredProfile() {
+        return $this->unrosteredProfile;
     }
 }
