@@ -1,6 +1,20 @@
 <?php
 
+/**
+ * Scrapes two UGC team pages (denoted as "our team" and "their team") and returns
+ * the name of the team and structured lists of the verified roster of "player
+ * name" and "Steam ID"
+ * Jacky Liang July 18 2015
+ */
+
 class ScrapeUGC {
+    // XPath to get the team abbreviation and name
+    const TEAM_ABB_XPATH = '//*[@id="wrapper"]/section/div/div[1]/div[1]/div/div/h1/text()';
+    const TEAM_NAME_XPATH = '//*[@id="wrapper"]/section/div/div[1]/div[1]/div/div/h1/b';
+
+    // XPath to get the Steam Name and ID
+    const NAME_AND_ID_XPATH = '//*[@id="wrapper"]//div[@class="col-md-12"]//h5/b';
+
     // Two URLs - our and their teams
     private $ourTeamURL;
     private $theirTeamURL;
@@ -69,12 +83,8 @@ class ScrapeUGC {
     public function scrapeUGCTeamName($url){
         $xpath = new DomXPath($url);
 
-        // XPath to get the team abbreviation and name
-        $teamAbbXPath = '//*[@id="wrapper"]/section/div/div[1]/div[1]/div/div/h1/text()';
-        $teamNameXPath = '//*[@id="wrapper"]/section/div/div[1]/div[1]/div/div/h1/b';
-
-        $teamAbbNode = $xpath->query($teamAbbXPath);
-        $teamNameNode = $xpath->query($teamNameXPath);
+        $teamAbbNode = $xpath->query(ScrapeUGC::TEAM_ABB_XPATH);
+        $teamNameNode = $xpath->query(ScrapeUGC::TEAM_NAME_XPATH);
 
         $teamAbb = '';
         $teamName = '';
@@ -105,10 +115,10 @@ class ScrapeUGC {
         $xpath = new DomXPath($url);
 
         // XPath to get the Steam names and Steam IDs
-        $steamNameAndIDXPath = '//*[@id="wrapper"]//div[@class="col-md-12"]//h5/b';
+
 
         // Get the Steam names and Steam IDs using the XPath
-        $steamNameAndIDs = $xpath->query($steamNameAndIDXPath);
+        $steamNameAndIDs = $xpath->query(ScrapeUGC::NAME_AND_ID_XPATH);
 
         // Temporary lists to store the Steam Names and Steam IDs
         $steamNameList = array();
@@ -127,8 +137,8 @@ class ScrapeUGC {
                 $steamID = $node->nodeValue;
             }
 
-            // Add each Steam name onto our team's list
             if(!empty($steamName)) {
+                // Add each Steam name onto our team's list
                 array_push($steamNameList, $steamName);
             } else if(!empty($steamID)){
                 // Add each Steam ID onto our team's list
