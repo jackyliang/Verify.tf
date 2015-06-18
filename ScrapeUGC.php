@@ -80,7 +80,7 @@ class ScrapeUGC {
      * @param $url     UGC Team URL
      * @return string  Team name in the form of 'Team Abbreviation' - 'Team Name'
      */
-    public function scrapeUGCTeamName($url){
+    private function scrapeUGCTeamName($url){
         $xpath = new DomXPath($url);
 
         $teamAbbNode = $xpath->query(ScrapeUGC::TEAM_ABB_XPATH);
@@ -110,7 +110,7 @@ class ScrapeUGC {
      * @param $url    UGC Team URL
      * @return array  Associative array of Steam Name -> Steam ID
      */
-    public function scrapeUGCTeam($url){
+    private function scrapeUGCTeam($url){
 
         $xpath = new DomXPath($url);
 
