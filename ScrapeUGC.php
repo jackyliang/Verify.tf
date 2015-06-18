@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Scrapes two UGC team pages (denoted as "our team" and "their team") and returns
+ * the name of the team and structured lists of the verified roster of "player
+ * name" and "Steam ID"
+ * Jacky Liang July 18th 2015
+ */
+
 class ScrapeUGC {
     // Two URLs - our and their teams
     private $ourTeamURL;

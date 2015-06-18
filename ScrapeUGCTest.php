@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Tests for the ScrapeUGC.php file
+ */
+
 require_once("ScrapeUGC.php");
 
 // URLs to scrape
