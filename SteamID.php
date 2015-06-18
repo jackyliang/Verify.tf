@@ -50,7 +50,11 @@ class SteamID {
         return STEAM_PROFILE . bcadd($this->accountId, STEAMID64_ADDITIVE, 0);
     }
 
-	public static function parse($input) {
+	public static function parse($inputRaw) {
+        // NOTE: Nasty workaround of lack of square braces around Steam ID 3
+        // returning invalid Steam profile URLs. Added June 18 2015 by Jacky.
+        $input = '[' . $inputRaw . ']';
+
 		if (preg_match('/(\d):(\d+)$/', $input, $match)) { // Matches both HLX (#:####) and Steam2 (STEAM_#:#:####) format
 			return new SteamID(($match[2] * 2) + $match[1]);
 		} else if (preg_match('/^\[?U:1:(\d+)\]?$/', $input, $match)) { // Matches Steam3 format
