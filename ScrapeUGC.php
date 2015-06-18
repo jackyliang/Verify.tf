@@ -1,6 +1,6 @@
 <?php
 
-class Verify {
+class ScrapeUGC {
     // Two URLs - our and their teams
     private $ourTeamURL;
     private $theirTeamURL;
@@ -17,7 +17,7 @@ class Verify {
     private $ourTeamName;
     private $theirTeamName;
 
-    public function Verify($ourTeamURL, $theirTeamURL) {
+    public function ScrapeUGC($ourTeamURL, $theirTeamURL) {
 
         // Silence the DOM errors
         libxml_use_internal_errors(true);
@@ -43,16 +43,28 @@ class Verify {
 
         $this->ourTeamName = $this->scrapeUGCTeamName($this->ourTeamHTML);
         $this->theirTeamName = $this->scrapeUGCTeamName($this->theirTeamHTML);
+    }
 
+    /**
+     * Gets our team's URL
+     * @return string Our Team's URL
+     */
+    public function getOurTeamURL(){
+        return $this->ourTeamURL;
+    }
 
-        // Scrape their team site
-        // Store Name -> Steam ID
+    /**
+     * Get their team's URL
+     * @return string Their Team's URL
+     */
+    public function getTheirTeamURL(){
+        return $this->theirTeamURL;
     }
 
     /**
      * When supplied a valid UGC team URL, return the team name
      * @param $url     UGC Team URL
-     * @return string  Team name
+     * @return string  Team name in the form of 'Team Abbreviation' - 'Team Name'
      */
     public function scrapeUGCTeamName($url){
         $xpath = new DomXPath($url);
@@ -124,7 +136,7 @@ class Verify {
             }
         }
 
-        // Combine Steam ID and Steam Name to our team's associative
+        // Combine Steam ID and Steam Name to team's associative
         // list
         $team = array_combine(
             $steamNameList,
@@ -154,19 +166,19 @@ class Verify {
         return $this->theirTeamPlayers;
     }
 
+    /**
+     * Get our team name
+     * @return string Our team name
+     */
     public function getOurTeamName(){
         return $this->ourTeamName;
     }
 
+    /**
+     * Get their team name
+     * @return string Their team name
+     */
     public function getTheirTeamName(){
         return $this->theirTeamName;
     }
-
-
-
-
-    public function getMisMatches(){
-
-    }
-
 }
