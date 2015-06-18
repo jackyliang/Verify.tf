@@ -33,6 +33,6 @@ $status = '
 #    367 "dan"               [U:1:80292746]      05:51       78    0 active
 ';
 
-$status_1 = '354 "tjsharky"          [U:1:195209528]     18:31       64';
-
 $parser = new ParseStatus($status);
+
+print_r($parser->getTeam());
