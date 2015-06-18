@@ -32,6 +32,12 @@ class Verify {
     private $theirTeamProfile;
     private $unrosteredProfile;
 
+    /**
+     * Determine the roster status of all players within the current server
+     * @param $ourTeamURL   UGC URL of your team
+     * @param $theirTeamURL UGC URL of the opposing team
+     * @param $statusOutput The server output when you type in `status`
+     */
     public function Verify(
         $ourTeamURL,
         $theirTeamURL,
@@ -53,8 +59,6 @@ class Verify {
         $this->ourTeamURL = $scrape->getOurTeamURL();
         $this->theirTeamURL = $scrape->getTheirTeamURL();
 
-        echo SteamID::parse('[U:1:62145982]')->communityId();
-
         // Loop through the current server's player list and compare each Steam
         // ID from the status output to the teams. We're basically taking the
         // Steam IDs from the status output and comparing each value to
@@ -63,20 +67,19 @@ class Verify {
         // is unrostered.
         foreach($serverPlayers as $name => $steamID) {
             if(in_array($steamID, $ourTeamPlayers)) {
-                // Add to our team's roster list
+                // Add to our team's roster list + profiles
                 $this->ourTeamRoster[$name] = $steamID;
                 $this->ourTeamProfile[$name] = SteamID::parse($steamID)->profileURL();
             } else if (in_array($steamID, $theirTeamPlayers)) {
-                // Add to their team's roster list
+                // Add to their team's roster list + profiles
                 $this->theirTeamRoster[$name] = $steamID;
                 $this->theirTeamProfile[$name] = SteamID::parse($steamID)->profileURL();
             } else {
-                // Add to unrostered
+                // Add to unrostered + profiles
                 $this->unrostered[$name] = $steamID;
                 $this->unrosteredProfile[$name] = SteamID::parse($steamID)->profileURL();
             }
         }
-        print_r($this->ourTeamProfile);
     }
 
     /**
