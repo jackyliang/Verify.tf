@@ -38,17 +38,17 @@ $status = '
 // Get info about our roster
 $verify = new Verify($ourURL, $theirURL, $status);
 echo $verify->getOurRosterName() . " - Size: " . $verify->getOurRosterSize() . PHP_EOL;
-// echo "URL - " . $verify->getOurRosterURL() . PHP_EOL;
-// print_r($verify->getOurRoster());
-//
-// // Get info about their roster
-// echo $verify->getTheirRosterName() . " - Size: " . $verify->getTheirRosterSize() . PHP_EOL;
-// echo "URL - " . $verify->getTheirRosterURL() . PHP_EOL;
-// print_r($verify->getTheirRoster());
-//
-// // Get info about the unrostered people
-// echo "Unrostered - Size: " . $verify->getUnrosteredSize() . PHP_EOL;
-// print_r($verify->getUnrostered());
+echo "URL - " . $verify->getOurRosterURL() . PHP_EOL;
+print_r($verify->getOurRoster());
+
+// Get info about their roster
+echo $verify->getTheirRosterName() . " - Size: " . $verify->getTheirRosterSize() . PHP_EOL;
+echo "URL - " . $verify->getTheirRosterURL() . PHP_EOL;
+print_r($verify->getTheirRoster());
+
+// Get info about the unrostered people
+echo "Unrostered - Size: " . $verify->getUnrosteredSize() . PHP_EOL;
+print_r($verify->getUnrostered());
 
 print_r($verify->getOurTeamProfile());
 print_r($verify->getTheirTeamProfile());
