@@ -15,9 +15,9 @@ $scrape = new ScrapeUGC($ourURL, $theirURL);
 // Print info about our team
 echo "Our team name: " . $scrape->getOurTeamName();
 echo "Our team URL: " . $scrape->getOurTeamURL();
-var_dump($scrape->getOurTeam());
+print_r($scrape->getOurTeam());
 
 // Print info about their team
 echo "Their team name: " . $scrape->getTheirTeamName();
 echo "Their team URL: " . $scrape->getTheirTeamURL();
-var_dump($scrape->getTheirTeam());
+print_r($scrape->getTheirTeam());
