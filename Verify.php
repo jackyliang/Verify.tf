@@ -92,6 +92,14 @@ class Verify {
     }
 
     /**
+     * Get the number of unrostered people within the server
+     * @return int The number of unrostered people within the server
+     */
+    public function getUnrosteredSize(){
+        return count($this->getUnrostered());
+    }
+
+    /**
      * Get the URL of our roster
      * @return string The UGC URL of our roster
      */

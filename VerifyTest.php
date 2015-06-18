@@ -36,6 +36,13 @@ $status = '
 ';
 
 $verify = new Verify($ourURL, $theirURL, $status);
-$verify->getOurRoster();
-$verify->getTheirRoster();
-$verify->getUnrostered();
+echo $verify->getOurRosterName() . " - Size: " . $verify->getOurRosterSize() . PHP_EOL;
+echo "URL - " . $verify->getOurRosterURL() . PHP_EOL;
+print_r($verify->getOurRoster());
+
+echo $verify->getTheirRosterName() . " - Size: " . $verify->getTheirRosterSize() . PHP_EOL;
+echo "URL - " . $verify->getTheirRosterURL() . PHP_EOL;
+print_r($verify->getTheirRoster());
+
+echo "Unrostered - Size: " . $verify->getUnrosteredSize() . PHP_EOL;
+print_r($verify->getUnrostered());
