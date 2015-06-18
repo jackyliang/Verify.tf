@@ -35,14 +35,17 @@ $status = '
 #    367 "dan"               [U:1:80292746]      05:51       78    0 active
 ';
 
+// Get info about our roster
 $verify = new Verify($ourURL, $theirURL, $status);
 echo $verify->getOurRosterName() . " - Size: " . $verify->getOurRosterSize() . PHP_EOL;
 echo "URL - " . $verify->getOurRosterURL() . PHP_EOL;
 print_r($verify->getOurRoster());
 
+// Get info about their roster
 echo $verify->getTheirRosterName() . " - Size: " . $verify->getTheirRosterSize() . PHP_EOL;
 echo "URL - " . $verify->getTheirRosterURL() . PHP_EOL;
 print_r($verify->getTheirRoster());
 
+// Get info about the unrostered people
 echo "Unrostered - Size: " . $verify->getUnrosteredSize() . PHP_EOL;
 print_r($verify->getUnrostered());
