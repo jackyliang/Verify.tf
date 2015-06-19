@@ -1,6 +1,8 @@
 # Verify.tf
 
-Verify.tf is a Team Fortress 2 UGC roster verification library. 
+Verify.tf is a Team Fortress 2 UGC roster verification library written in PHP. All you need
+ is your UGC roster URL, the opposing team's roster URL, and your console `status` output,
+ for it to tell you who is rostered and who is not. 
 
 ## Installation
 
