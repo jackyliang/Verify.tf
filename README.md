@@ -12,7 +12,7 @@ Verify.tf is a Team Fortress 2 UGC roster verification library.
 
 Import `Verify.tf` to your project using:
     
-    require_once("Verify.tf");
+    require_once("Verify.php");
     
 ### Initialize it 
     
