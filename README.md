@@ -8,15 +8,21 @@ Verify.tf is a Team Fortress 2 UGC roster verification library.
 
 ## Usage
 
+### Import it
+
 Import `Verify.tf` to your project using:
     
     require_once("Verify.tf");
+    
+### Initialize it 
     
 Create a new Verify instance where `$ourURL` is your team's UGC URL, `$theirURL`
 is the opposing team's UGC URL, and `$status` is the output you get when you type
 in `status` in the console in-game:
 
     $verify = new Verify($ourURL, $theirURL, $status);
+    
+### Get some information about your team 
     
 Get your team's roster name:
 
@@ -33,6 +39,12 @@ Get your team's UGC URL:
 Get your team's roster in this server (Steam Name => Steam ID 3):
 
     $verify->getOurRoster();
+     
+Get your team's roster in this server (Steam Name => Steam Community Profile):
+
+    $verify->getOurTeamProfile();
+    
+### Get some information about the opposing team 
     
 Get the opposing team's roster name:
 
@@ -50,6 +62,12 @@ Get the opposing team's roster within this server (Steam Name => Steam ID 3):
 
     $verify->getTheirRoster();
     
+Get the opposing team's roster within this server (Steam Name => Steam Community Profile):
+
+    $verify->getTheirTeamProfile();
+    
+### Get some information about the unrostered players  
+    
 Get unrostered players within this server:
 
     $verify->getUnrostered();
@@ -57,7 +75,10 @@ Get unrostered players within this server:
 Get the number of unrostered players within this server:
 
     $verify->getUnrosteredSize(); 
+    
+Get unrostered players in this server (Steam Name => Steam Community Profile):
 
+    $verify->getUnrosteredProfile(); 
 
 ## Contributing
 
