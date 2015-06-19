@@ -72,13 +72,14 @@ Get unrostered players within this server (Steam Name => Steam ID 3):
 
     $verify->getUnrostered();
     
+Get unrostered players in this server (Steam Name => Steam Community Profile):
+
+    $verify->getUnrosteredProfile(); 
+    
 Get the number of unrostered players within this server:
 
     $verify->getUnrosteredSize(); 
     
-Get unrostered players in this server (Steam Name => Steam Community Profile):
-
-    $verify->getUnrosteredProfile(); 
 
 ## Contributing
 
