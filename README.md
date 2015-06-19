@@ -68,7 +68,7 @@ Get the opposing team's roster within this server (Steam Name => Steam Community
     
 ### Get some information about the unrostered players  
     
-Get unrostered players within this server:
+Get unrostered players within this server (Steam Name => Steam ID 3):
 
     $verify->getUnrostered();
     
