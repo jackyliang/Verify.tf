@@ -49,11 +49,11 @@ Get your team's UGC URL:
  
     $verify->getOurRosterURL();
     
-Get your team's roster in this server (Steam Name => Steam ID 3):
+Get your team's roster in this server (`Steam Name` => `Steam ID 3`):
 
     $verify->getOurRoster();
      
-Get your team's roster in this server (Steam Name => Steam Community Profile):
+Get your team's roster in this server (`Steam Name` => `Steam Community Profile`):
 
     $verify->getOurTeamProfile();
     
@@ -71,21 +71,21 @@ Get the team's UGC URL:
  
     $verify->getTheirRosterURL();
     
-Get the opposing team's roster within this server (Steam Name => Steam ID 3):
+Get the opposing team's roster within this server (`Steam Name` => `Steam ID 3`):
 
     $verify->getTheirRoster();
     
-Get the opposing team's roster within this server (Steam Name => Steam Community Profile):
+Get the opposing team's roster within this server (`Steam Name` => `Steam Community Profile`):
 
     $verify->getTheirTeamProfile();
     
 ### Get some information about the unrostered players  
     
-Get unrostered players within this server (Steam Name => Steam ID 3):
+Get unrostered players within this server (`Steam Name` => `Steam ID 3`):
 
     $verify->getUnrostered();
     
-Get unrostered players in this server (Steam Name => Steam Community Profile):
+Get unrostered players in this server (`Steam Name` => `Steam Community Profile`):
 
     $verify->getUnrosteredProfile(); 
     
