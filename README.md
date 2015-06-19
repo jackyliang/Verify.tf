@@ -37,7 +37,7 @@ in `status` in the console in-game:
 
     $verify = new Verify($ourURL, $theirURL, $status);
     
-### Get some information about the unrostered players  
+### Find out who's unrostered 
     
 Get unrostered players within this server (`Steam Name` => `Steam ID 3`):
 
@@ -51,7 +51,7 @@ Get the number of unrostered players within this server:
 
     $verify->getUnrosteredSize(); 
     
-### Get some information about your team 
+### Find out more about who's rostered on your team 
     
 Get your team's roster name:
 
@@ -73,7 +73,7 @@ Get your team's roster in this server (`Steam Name` => `Steam Community Profile`
 
     $verify->getOurTeamProfile();
     
-### Get some information about the opposing team 
+### Find out more about who's rostered on the opposing team
     
 Get the opposing team's roster name:
 
