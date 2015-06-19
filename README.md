@@ -133,5 +133,5 @@ and [HorseMD](https://github.com/HorseMD/) for the Steam ID 3 regex
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 
-*tl;dr do anything you want with my code as long as you provide attribution 
+***tl;dr*** *do anything you want with my code as long as you provide attribution 
 back to me and don’t hold me liable for explosions.*
